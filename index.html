@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#6c4cff" />
+    <meta name="description" content="Belajar bahasa Inggris gratis lewat petualangan, permainan, dan latihan singkat yang seru." />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css?v=15" />
+    <title>English Playground — Learn English Daily from Scratch</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Langsung ke konten</a>
+
+    <header class="site-header" id="top">
+      <nav class="nav shell" aria-label="Navigasi utama">
+        <a class="brand" href="#home" aria-label="English Playground home">
+          <span class="brand-mark cat-logo" aria-hidden="true"><img src="assets/pearl-cat-logo-512.png" alt="" /></span>
+          <span>english<span>playground</span></span>
+          <small>beta</small>
+        </a>
+
+        <div class="nav-links" id="navLinks">
+          <a class="active" href="#home">Home</a>
+          <a href="#learn">Belajar</a>
+          <a href="#tenses-center">Tenses</a>
+          <a href="#professional-center">Professional</a>
+          <a href="#games">Games</a>
+          <a href="#progress">Progress</a>
+          <a href="#faq">Bantuan</a>
+        </div>
+
+        <div class="nav-actions">
+          <button class="icon-button search-open" aria-label="Cari apa saja" title="Cari"><span aria-hidden="true">⌕</span></button>
+          <button class="pill-button" id="langToggle" aria-label="Ganti bahasa">ID</button>
+          <button class="icon-button" id="themeToggle" aria-label="Gunakan mode gelap"><span aria-hidden="true">☾</span></button>
+          <button class="avatar-button" aria-label="Buka profil">A</button>
+          <button class="icon-button menu-button" id="menuButton" aria-expanded="false" aria-controls="navLinks"><span aria-hidden="true">☰</span></button>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero shell" id="home">
+        <div class="hero-copy">
+          <div class="eyebrow"><span>✦</span> 100% GRATIS SELAMA WEBSITENYA MASIH ADA</div>
+          <h1>Learn English Daily<br /><span>from Scratch.</span></h1>
+          <p class="hero-subtitle">Petualangan kecil setiap hari. Main game, bangun streak, dan mulai pede ngomong Inggris dari nol, santai aja.</p>
+          <div class="hero-actions">
+            <button class="primary-button start-button">Mulai belajar <span aria-hidden="true">→</span></button>
+            <button class="secondary-button demo-button"><span class="play-icon" aria-hidden="true">▶</span> Lihat cara main</button>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="Ilustrasi petualangan belajar bahasa Inggris">
+          <img src="assets/hero-english-playground.webp" alt="Pelajar Indonesia terbang dengan buku ajaib ditemani maskot burung kuning" width="1200" height="800" fetchpriority="high" />
+          <div class="float-card word-card"><button class="sound-button" aria-label="Dengarkan kata adventure">♪</button><div><span>WORD OF THE DAY</span><strong>adventure</strong><small>/ədˈven.tʃər/ • petualangan</small></div></div>
+          <div class="mascot-bubble">Let’s go, <strong>teman!</strong></div>
+        </div>
+      </section>
+
+      <section class="stats-strip" aria-label="Cara belajar di platform">
+        <div class="shell stats-grid">
+          <div><span>🔊</span><strong>Dengar</strong><small>pelafalan langsung</small></div>
+          <div><span>🧠</span><strong>Latihan</strong><small>feedback saat itu juga</small></div>
+          <div><span>🎮</span><strong>Main</strong><small>game yang bisa dicoba</small></div>
+          <div><span>💾</span><strong id="dbStatus">Database lokal</strong><small>progress tersimpan nyata</small></div>
+        </div>
+      </section>
+
+      <section class="section shell" id="learn">
+        <div class="section-heading split-heading">
+          <div><div class="eyebrow purple"><span>✦</span> LANJUTKAN PETUALANGAN</div><h2>Satu langkah kecil<br />hari ini.</h2></div>
+          <div class="level-summary"><div class="level-ring"><span id="levelNumber">1</span></div><div><strong id="levelLabel">Starter Level 1</strong><p><span id="xpValue">0</span> / <span id="xpTarget">500</span> XP</p><div class="progress-track"><i id="xpProgress" style="width:0%"></i></div></div></div>
+        </div>
+
+        <div class="learning-layout">
+          <article class="quest-card">
+            <div class="quest-top"><div><span class="tag orange">🔥 DAILY QUEST</span><h3>Siap naik level?</h3><p>Selesaikan 3 misi sebelum tengah malam.</p></div><div class="quest-xp">+60 <small>XP</small></div></div>
+            <div class="quest-list">
+              <button class="quest-item" data-quest="0"><span class="quest-icon lavender">Aa</span><span><strong>Vocabulary Sprint</strong><small>Pelajari satu kata tentang Travel</small></span><span class="quest-action">Mulai</span></button>
+              <button class="quest-item" data-quest="1"><span class="quest-icon yellow">♫</span><span><strong>Quick Listening</strong><small>Dengar obrolan di coffee shop</small></span><span class="quest-action">Mulai</span></button>
+              <button class="quest-item" data-quest="2"><span class="quest-icon mint">✓</span><span><strong>Sentence Builder</strong><small>Susun 5 kalimat yang makin panjang</small></span><span class="quest-action">Mulai</span></button>
+            </div>
+            <div class="quest-footer"><div class="progress-track"><i id="questProgress" style="width:0%"></i></div><span id="questCount">0 / 3 selesai</span></div>
+          </article>
+
+          <aside class="streak-panel">
+            <div class="streak-header"><div><span class="big-flame">🌱</span><span><strong id="streakTitle">Mulai streak-mu</strong><small id="streakDetail">hari pertama dimulai setelah satu latihan</small></span></div><span class="tag purple-bg" id="bestStreak">TERBAIK 0</span></div>
+            <div class="week-row" id="weekRow" aria-label="Aktivitas tujuh hari terakhir"></div>
+            <p id="streakMessage">Selesaikan <strong>satu latihan</strong> untuk menandai hari ini.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section path-section" id="path">
+        <div class="shell">
+          <div class="section-heading centered"><div class="eyebrow coral"><span>✦</span> PETA BELAJAR</div><h2>Pilih duniamu.</h2><p>Nggak harus urut. Ikuti rasa penasaranmu.</p></div>
+          <div class="path-wrap">
+            <svg class="path-line" viewBox="0 0 1000 330" preserveAspectRatio="none" aria-hidden="true"><path d="M60,190 C190,60 270,285 400,170 S610,45 720,170 S850,300 950,120" /></svg>
+            <button class="path-node first-node current" data-world="Basic Greetings"><span class="node-badge">1</span><span class="node-icon">👋</span><strong>Greetings</strong><small>0/12 lessons</small></button>
+            <button class="path-node second-node" data-world="Family"><span class="node-badge">2</span><span class="node-icon">🏡</span><strong>Family</strong><small>0/12 lessons</small></button>
+            <button class="path-node locked" data-world="Food"><span class="node-badge">🔒</span><span class="node-icon">🍜</span><strong>Food</strong><small>0/10 • terkunci</small></button>
+            <button class="path-node locked" data-world="Travel"><span class="node-badge">🔒</span><span class="node-icon">✈️</span><strong>Travel</strong><small>terkunci</small></button>
+            <button class="path-node locked" data-world="Work & Business"><span class="node-badge">🔒</span><span class="node-icon">💼</span><strong>Work</strong><small>terkunci</small></button>
+          </div>
+          <button class="text-button" id="fullPath">Lihat seluruh peta <span>→</span></button>
+        </div>
+      </section>
+
+      <section class="section shell" id="games">
+        <div class="section-heading split-heading compact"><div><div class="eyebrow mint-text"><span>✦</span> BELAJAR SAMBIL MAIN</div><h2>Pilih mood-mu.</h2><p>Lima menit pun tetap dihitung. Yang penting muncul.</p></div><button class="secondary-button all-games">Lihat semua game <span>→</span></button></div>
+        <div class="feature-grid">
+          <button class="feature-card vocabulary-card" data-module="Vocabulary"><div class="feature-art"><span>🍊</span><span>🎧</span><span>🧳</span></div><div class="tag purple-bg">VOCABULARY</div><h3>Koleksi kata baru</h3><p>Gambar, suara, contoh nyata. Bukan hafalan kaku.</p><div class="card-meta"><span>Kategori pilihan</span><span>Mulai →</span></div></button>
+          <button class="feature-card grammar-card" data-module="Grammar"><div class="feature-art formula">S + V<sub>1</sub><small>every day</small></div><div class="tag blue-bg">GRAMMAR</div><h3>Grammar, tapi masuk akal</h3><p>Visual sederhana untuk hal-hal yang biasanya bikin pusing.</p><div class="card-meta"><span>Latihan interaktif</span><span>Jelajahi →</span></div></button>
+          <button class="feature-card speaking-card" data-module="Speaking"><div class="feature-art waveform"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="tag coral-bg">SPEAKING</div><h3>Ngomong tanpa malu</h3><p>Dengar contoh, ulangi, lalu cek hasil transkripsinya.</p><div class="card-meta"><span>Pakai mikrofon browser</span><span>Coba →</span></div></button>
+          <button class="feature-card games-card" data-module="Games"><div class="feature-art tiles"><span>W</span><span>O</span><span>R</span><span>D</span></div><div class="tag yellow-bg">MINI GAMES</div><h3>Main sambil mengingat</h3><p>Cocokkan kata, susun kalimat, dan dapatkan feedback langsung.</p><div class="card-meta"><span>Bisa langsung dimainkan</span><span>Main →</span></div></button>
+        </div>
+      </section>
+
+      <section class="section center-section tense-center" id="tenses-center">
+        <div class="shell">
+          <div class="center-hero">
+            <div><div class="eyebrow purple"><span>✦</span> TENSE LEARNING CENTER</div><h2>17 cara melihat waktu.<br/><span>Satu tempat untuk paham.</span></h2><p>Pelajari formula, fungsi, timeline, contoh positif, negatif, pertanyaan, dan kesalahan umum untuk setiap bentuk tense.</p><div class="center-actions"><button class="primary-button" id="startTenseQuiz">Mulai tes 50 soal <span>→</span></button><span>30 menit • skor maksimal 100</span></div></div>
+            <div class="cat-orbit"><span class="orbit-spark one">✦</span><span class="orbit-spark two">✧</span><img src="assets/pearl-cat-logo-512.png" alt="Maskot kucing hitam dengan kalung mutiara" /><div class="cat-note">I’ve got time<br/>for tenses! 🐾</div></div>
+          </div>
+          <div class="tense-filter" role="group" aria-label="Filter tense"><button class="active" data-tense-filter="all">Semua 17</button><button data-tense-filter="Present">Present</button><button data-tense-filter="Past">Past</button><button data-tense-filter="Future">Future</button><button data-tense-filter="Future in the Past">Future in the Past</button></div>
+          <div class="tense-grid" id="tenseGrid" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="section professional-center" id="professional-center">
+        <div class="shell">
+          <div class="professional-heading"><div><div class="eyebrow light"><span>✦</span> ADVANCED CENTER</div><h2>English for work,<br/>without the corporate fog.</h2><p>Practice clear emails, meetings, negotiation, presentations, interviews, and professional networking.</p></div><div class="pro-quiz-card"><span>⏱</span><div><small>PROFESSIONAL CAPABILITY TEST</small><strong>20 scenarios • 15 minutes</strong><p>Score out of 100 with a saved result.</p></div><button id="startProfessionalQuiz">Start test →</button></div></div>
+          <div class="professional-grid" id="professionalGrid"></div>
+          <div class="video-learning-card">
+            <div class="video-copy"><span class="tag yellow-bg">WATCH & LEARN</span><h3>Professional English video lesson</h3><p>Watch the full lesson, take notes, then try the Professional Capability Test while the ideas are fresh.</p><a href="https://www.youtube.com/watch?v=mO4idaGowrw" target="_blank" rel="noopener noreferrer">Open directly on YouTube ↗</a></div>
+            <div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/mO4idaGowrw" title="Professional English video lesson" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section challenge-section" id="progress">
+        <div class="shell challenge-grid">
+          <div class="challenge-copy"><div class="eyebrow light"><span>✦</span> 5-MINUTE CHALLENGE</div><h2>Susun lima<br />kalimat.</h2><p>Setiap ronde makin panjang. Selesaikan sebelum lima menit habis.</p><div class="high-score"><span>⚡</span><div><small>SKOR SESI INI</small><strong id="currentScore">0 pts</strong></div></div></div>
+          <div class="sentence-game" aria-live="polite">
+            <div class="game-top"><span><i id="challengeStep">1</i> / 5</span><div class="timer"><i></i> <strong id="timer">05:00</strong></div><span class="combo" id="challengeLength">3 KATA</span></div>
+            <p id="challengePrompt">Susun menjadi kalimat yang benar:</p>
+            <div class="answer-zone" id="answerZone" aria-label="Area jawaban"><span class="hint">Memuat kalimat…</span></div>
+            <div class="word-bank" id="wordBank"></div>
+            <button class="check-button" id="checkSentence">Cek Jawaban <span>↵</span></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section shell community-section faq-only" id="faq">
+        <div class="faq-block"><div class="eyebrow purple"><span>✦</span> INFO SINGKAT</div><h2>Pertanyaan umum.</h2><details open><summary>Beneran gratis?</summary><p>Iya. Materi dan latihan di halaman ini bisa dipakai gratis selama websitenya masih ada.</p></details><details><summary>Harus bikin akun dulu?</summary><p>Nggak. Progress tamu tersimpan di perangkatmu. Akun baru diperlukan jika nanti ingin sinkron lintas perangkat.</p></details><details><summary>Cocok untuk pemula total?</summary><p>Cocok. Kamu bisa mulai dari greetings dan kosakata sehari-hari, lalu lanjut sesuai ritmemu.</p></details></div>
+      </section>
+
+      <section class="final-cta">
+        <div class="shell"><span class="cta-star">✦</span><h2>Jangan cuma niat.<br /><span>Mulai satu lesson.</span></h2><p>Gratis. Tanpa login. Cuma butuh 5 menit.</p><button class="primary-button inverted start-button">Mulai belajar sekarang <span>→</span></button></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="shell footer-grid"><div><a class="brand footer-brand" href="#top"><span class="brand-mark cat-logo"><img src="assets/pearl-cat-logo-512.png" alt="" /></span><span>english<span>playground</span></span></a><p>Latihan bahasa Inggris gratis yang bisa langsung dicoba, tanpa wajib login.</p></div><div><strong>Belajar</strong><a href="#learn" data-module-link="Vocabulary">Vocabulary</a><a href="#learn" data-module-link="Grammar">Grammar</a><a href="#tenses-center">17 Tenses</a><a href="#professional-center">Professional</a></div><div><strong>Latihan</strong><a href="#learn" data-activity="listening">Listening</a><a href="#learn" data-activity="speaking">Speaking</a><a href="#progress">Sentence Builder</a><a href="#games" data-module-link="Games">Games</a></div><div><strong>Info</strong><a href="#faq">Tentang pendekatan</a><a href="#faq">FAQ</a><a href="#faq" data-info="privacy">Privasi lokal</a></div></div>
+      <div class="shell footer-bottom"><span>© 2026 English Playground. Created by earl.essentials with love.</span><span>Bahasa Indonesia · English</span></div>
+    </footer>
+
+    <nav class="mobile-nav" aria-label="Navigasi mobile"><a href="#home" class="active"><span>⌂</span>Home</a><a href="#learn"><span>◈</span>Belajar</a><button class="search-open" aria-label="Cari apa saja"><span>⌕</span>Cari</button><a href="#games"><span>✦</span>Games</a><a href="#progress"><span>◒</span>Progress</a></nav>
+
+    <dialog id="modal" class="modal">
+      <button class="modal-close" aria-label="Tutup">×</button>
+      <div id="modalContent"></div>
+    </dialog>
+
+    <dialog id="searchModal" class="search-modal">
+      <form method="dialog" class="search-shell"><label for="globalSearch">Cari di English Playground</label><div class="search-input"><span>⌕</span><input id="globalSearch" type="search" placeholder="Cari kata, grammar, lesson, game…" autocomplete="off" /><button aria-label="Tutup pencarian">ESC</button></div><div class="search-results" id="searchResults"><p>COBA CARI</p><button type="button"><span>🔤</span><span><strong>Irregular verbs</strong><small>Grammar • Verb Explorer</small></span></button><button type="button"><span>✈️</span><span><strong>Travel vocabulary</strong><small>Vocabulary • 48 kata</small></span></button><button type="button"><span>🎮</span><span><strong>Word Match</strong><small>Mini game • 5 menit</small></span></button></div></form>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <div class="confetti" id="confetti" aria-hidden="true"></div>
+    <script src="app.js?v=16" type="module"></script>
+  </body>
+</html>

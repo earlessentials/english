@@ -1,0 +1,13 @@
+{
+  "name": "English Playground",
+  "short_name": "Playground",
+  "description": "Belajar bahasa Inggris gratis lewat permainan dan petualangan.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fffdf9",
+  "theme_color": "#6c4cff",
+  "lang": "id",
+  "icons": [
+    { "src": "assets/pearl-cat-logo-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
