@@ -1,9 +1,9 @@
-import { TENSES, TENSE_QUIZ, PROFESSIONAL, PROFESSIONAL_QUIZ } from './centers-data.js?v=2';
-import { PATH_LESSONS } from './path-data.js?v=1';
+import { TENSES, TENSE_QUIZ, PROFESSIONAL, PROFESSIONAL_QUIZ } from './centers-data.js?v=3';
+import { PATH_LESSONS } from './path-data.js?v=2';
 
 const DB_NAME = 'english-playground';
 const DB_VERSION = 1;
-const SEED_VERSION = 6;
+const SEED_VERSION = 7;
 const DATA_VERSION = 1;
 
 const vocabulary = [
@@ -41,13 +41,94 @@ const listening = [
   { id:'listening-office', type:'listening', topic:'At the office', sentence:'The meeting has moved to Friday morning.', question:'Kapan rapatnya?', choices:['Thursday morning','Friday morning','Friday afternoon'], answer:'Friday morning' },
 ];
 
-const challenges = [
-  ['challenge-1',1,'I drink water','Saya minum air'],
-  ['challenge-2',2,'She reads every night','Dia membaca setiap malam'],
-  ['challenge-3',3,'We are learning English together','Kami sedang belajar bahasa Inggris bersama'],
-  ['challenge-4',4,'My brother takes the bus to work','Kakak laki-lakiku naik bus ke tempat kerja'],
-  ['challenge-5',5,'They have been waiting at the station since morning','Mereka sudah menunggu di stasiun sejak pagi'],
-].map(([id, order, sentence, translation]) => ({ id, type:'challenge', order, sentence, translation }));
+export const CHALLENGE_SETS = [
+  [
+    ['I drink water','Saya minum air'],
+    ['She reads every night','Dia membaca setiap malam'],
+    ['We are learning English together','Kami sedang belajar bahasa Inggris bersama'],
+    ['My brother takes the bus to work','Kakak laki-lakiku naik bus ke tempat kerja'],
+    ['They have been waiting at the station since morning','Mereka sudah menunggu di stasiun sejak pagi'],
+  ],
+  [
+    ['We study together','Kami belajar bersama'],
+    ['Rina cooks dinner tonight','Rina memasak makan malam ini'],
+    ['My friends play football after school','Teman-teman saya bermain sepak bola setelah sekolah'],
+    ['The small café opens early every weekday','Kafe kecil itu buka lebih awal setiap hari kerja'],
+    ['Our English teacher gives us helpful feedback after every class','Guru bahasa Inggris kami memberi umpan balik bermanfaat setelah setiap kelas'],
+  ],
+  [
+    ['I love music','Saya suka musik'],
+    ['He visits Bali often','Dia sering mengunjungi Bali'],
+    ['We usually take the train home','Kami biasanya naik kereta pulang'],
+    ['Her older sister works at a busy hospital','Kakak perempuannya bekerja di rumah sakit yang sibuk'],
+    ['They are planning a long holiday across Java next month','Mereka merencanakan liburan panjang keliling Jawa bulan depan'],
+  ],
+  [
+    ['The baby sleeps','Bayi itu tidur'],
+    ['Please close the window','Tolong tutup jendelanya'],
+    ['My father drives carefully in heavy rain','Ayah saya mengemudi dengan hati-hati saat hujan lebat'],
+    ['I bought a new laptop for my university project','Saya membeli laptop baru untuk proyek universitas saya'],
+    ['Our team will present the final proposal to the client tomorrow','Tim kami akan mempresentasikan proposal akhir kepada klien besok'],
+  ],
+  [
+    ['Birds fly south','Burung terbang ke selatan'],
+    ['She drinks tea slowly','Dia minum teh perlahan'],
+    ['We watched an interesting movie last night','Kami menonton film menarik tadi malam'],
+    ['The students are preparing for their final English examination','Para siswa sedang mempersiapkan ujian akhir bahasa Inggris'],
+    ['My manager asked me to revise the budget before our meeting','Manajer saya meminta saya merevisi anggaran sebelum rapat kami'],
+  ],
+  [
+    ['I feel happy','Saya merasa bahagia'],
+    ['They clean the house','Mereka membersihkan rumah'],
+    ['Arif sends emails every Monday morning','Arif mengirim email setiap Senin pagi'],
+    ['We should arrive at the airport two hours early','Kita sebaiknya tiba di bandara dua jam lebih awal'],
+    ['Learning a little English every day can build lasting confidence','Belajar sedikit bahasa Inggris setiap hari dapat membangun kepercayaan diri yang tahan lama'],
+  ],
+  [
+    ['Coffee smells wonderful','Kopi beraroma harum'],
+    ['The bus arrives late','Bus itu tiba terlambat'],
+    ['My cousin studies business at university','Sepupu saya belajar bisnis di universitas'],
+    ['Could you please explain this grammar rule again','Bisakah Anda menjelaskan aturan tata bahasa ini lagi'],
+    ['I have been practicing my pronunciation with podcasts every evening','Saya sudah berlatih pelafalan dengan podcast setiap malam'],
+  ],
+  [
+    ['Rain falls softly','Hujan turun dengan lembut'],
+    ['She wears a blue jacket','Dia memakai jaket biru'],
+    ['We ordered spicy noodles for lunch','Kami memesan mi pedas untuk makan siang'],
+    ['The new employee joined our marketing team last week','Karyawan baru itu bergabung dengan tim pemasaran kami minggu lalu'],
+    ['I would like to confirm the revised delivery schedule today','Saya ingin mengonfirmasi jadwal pengiriman yang telah direvisi hari ini'],
+  ],
+  [
+    ['Dogs need exercise','Anjing membutuhkan olahraga'],
+    ['Turn left after the bank','Belok kiri setelah bank'],
+    ['His family celebrates birthdays with homemade food','Keluarganya merayakan ulang tahun dengan makanan buatan rumah'],
+    ['The hotel receptionist helped us find a quiet room','Resepsionis hotel membantu kami menemukan kamar yang tenang'],
+    ['We will discuss the project timeline during tomorrow morning meeting','Kami akan membahas jadwal proyek saat rapat besok pagi'],
+  ],
+  [
+    ['Please speak slowly','Tolong bicara perlahan'],
+    ['My phone needs charging','Ponsel saya perlu diisi daya'],
+    ['She is reading an English novel','Dia sedang membaca novel berbahasa Inggris'],
+    ['Our neighbors moved into their new house yesterday','Tetangga kami pindah ke rumah baru mereka kemarin'],
+    ['The customer asked whether the product included a written warranty','Pelanggan bertanya apakah produk tersebut menyertakan garansi tertulis'],
+  ],
+  [
+    ['Practice creates progress','Latihan menciptakan kemajuan'],
+    ['I missed the train','Saya ketinggalan kereta'],
+    ['They have finished their group assignment','Mereka telah menyelesaikan tugas kelompok'],
+    ['My supervisor gave me clear and constructive feedback','Atasan saya memberi umpan balik yang jelas dan membangun'],
+    ['We are going to negotiate the contract terms next Friday','Kami akan menegosiasikan ketentuan kontrak Jumat depan'],
+  ],
+];
+
+const challenges = CHALLENGE_SETS.flatMap((rounds, setIndex) => rounds.map(([sentence, translation], roundIndex) => ({
+  id:`challenge-${setIndex + 1}-${roundIndex + 1}`,
+  type:'challenge',
+  set:setIndex + 1,
+  order:roundIndex + 1,
+  sentence,
+  translation,
+})));
 
 const games = [
   { id:'game-word-match', type:'game', title:'Word Match', algorithm:'match', icon:'🔗', config:{ pairs:[['apple','apel'],['book','buku'],['rain','hujan']] } },

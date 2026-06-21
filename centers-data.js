@@ -50,12 +50,84 @@ export const TENSE_QUIZ = TENSES.flatMap(tenseRecord => tenseRecord.questions.ma
 }))).slice(0,50);
 
 export const PROFESSIONAL = [
-  { id:'pro-email', type:'professional', title:'Clear Business Email', icon:'✉️', level:'Advanced', focus:'tone, structure, concise requests', scenario:'Ask a client to confirm the revised deadline.', model:'Could you please confirm whether the revised Friday deadline works for your team?', phrases:['Could you please confirm…','For clarity, …','Please let me know by…'] },
-  { id:'pro-meeting', type:'professional', title:'Running Meetings', icon:'🗓️', level:'Advanced', focus:'facilitation and alignment', scenario:'Bring a discussion back to the agenda.', model:'That is useful context. May I bring us back to the decision we need to make today?', phrases:['Let us return to…','Can we align on…','To summarize the decision…'] },
-  { id:'pro-negotiation', type:'professional', title:'Negotiation Language', icon:'🤝', level:'Advanced', focus:'trade-offs and diplomatic disagreement', scenario:'Reject a price without closing the conversation.', model:'That figure is beyond our current range, but we are open to discussing scope and payment terms.', phrases:['We would need to revisit…','What flexibility do you have on…','We could agree if…'] },
-  { id:'pro-presentation', type:'professional', title:'Executive Presentations', icon:'📊', level:'Advanced', focus:'signposting and concise impact', scenario:'Introduce three recommendations to senior leaders.', model:'I will focus on three recommendations, their expected impact, and the decision required today.', phrases:['The key takeaway is…','This matters because…','My recommendation is…'] },
-  { id:'pro-interview', type:'professional', title:'Professional Interviews', icon:'💼', level:'Advanced', focus:'evidence-based answers', scenario:'Explain a project challenge using STAR.', model:'The deadline moved forward by two weeks, so I reprioritized the scope and coordinated daily risk checks.', phrases:['The situation was…','My responsibility was…','The measurable result was…'] },
-  { id:'pro-networking', type:'professional', title:'Strategic Networking', icon:'🌐', level:'Advanced', focus:'introductions and follow-up', scenario:'Introduce yourself at an industry event.', model:'I lead product operations for an education platform, with a focus on sustainable growth and learner retention.', phrases:['I specialize in…','What brings you to…','I would enjoy continuing this conversation.'] },
+  {
+    id:'pro-email', type:'professional', title:'Clear Business Email', icon:'✉️', level:'Advanced', focus:'tone, structure, concise requests',
+    scenario:'Ask a client to confirm the revised deadline.',
+    model:'Could you please confirm whether the revised Friday deadline works for your team?',
+    phrases:['Could you please confirm…','For clarity, …','Please let me know by…'],
+    playbook:['State the purpose in the first sentence.','Give one clear action with a specific deadline.','Close by making the next step easy to answer.'],
+    examples:[
+      { label:'Deadline', text:'Could you please confirm the revised delivery date by Wednesday?', translation:'Bisakah Anda mengonfirmasi tanggal pengiriman yang direvisi paling lambat hari Rabu?' },
+      { label:'Follow-up', text:'A quick reminder that we are waiting for the signed agreement.', translation:'Pengingat singkat bahwa kami masih menunggu perjanjian yang telah ditandatangani.' },
+      { label:'Clarification', text:'For clarity, the quoted price includes installation and training.', translation:'Untuk memperjelas, harga yang ditawarkan sudah termasuk instalasi dan pelatihan.' },
+      { label:'Decision', text:'Please let me know which option you prefer so we can proceed today.', translation:'Mohon beri tahu opsi yang Anda pilih agar kami dapat melanjutkan hari ini.' },
+    ],
+  },
+  {
+    id:'pro-meeting', type:'professional', title:'Running Meetings', icon:'🗓️', level:'Advanced', focus:'facilitation and alignment',
+    scenario:'Bring a discussion back to the agenda.',
+    model:'That is useful context. May I bring us back to the decision we need to make today?',
+    phrases:['Let us return to…','Can we align on…','To summarize the decision…'],
+    playbook:['Open with the outcome the meeting must produce.','Use neutral language to manage time and interruptions.','End with an owner and deadline for every action.'],
+    examples:[
+      { label:'Opening', text:'By the end of this meeting, we need to agree on the launch date.', translation:'Pada akhir rapat ini, kita perlu menyepakati tanggal peluncuran.' },
+      { label:'Refocus', text:'That is useful context; let us return to the budget decision.', translation:'Itu konteks yang berguna; mari kembali ke keputusan anggaran.' },
+      { label:'Alignment', text:'Can we align on the three priorities before we discuss resources?', translation:'Bisakah kita menyepakati tiga prioritas sebelum membahas sumber daya?' },
+      { label:'Action item', text:'To confirm, Maya will send the revised forecast by Tuesday.', translation:'Untuk memastikan, Maya akan mengirim proyeksi yang direvisi paling lambat Selasa.' },
+    ],
+  },
+  {
+    id:'pro-negotiation', type:'professional', title:'Negotiation Language', icon:'🤝', level:'Advanced', focus:'trade-offs and diplomatic disagreement',
+    scenario:'Reject a price without closing the conversation.',
+    model:'That figure is beyond our current range, but we are open to discussing scope and payment terms.',
+    phrases:['We would need to revisit…','What flexibility do you have on…','We could agree if…'],
+    playbook:['Acknowledge the other position before disagreeing.','Explain the constraint without sounding personal.','Offer a conditional trade instead of a flat rejection.'],
+    examples:[
+      { label:'Price', text:'That figure is beyond our range, but we could discuss a smaller initial scope.', translation:'Angka tersebut di luar kisaran kami, tetapi kita dapat membahas cakupan awal yang lebih kecil.' },
+      { label:'Timeline', text:'We could meet that date if the approval process is shortened.', translation:'Kami dapat memenuhi tanggal tersebut jika proses persetujuan dipersingkat.' },
+      { label:'Trade-off', text:'If you can extend the contract term, we can reduce the monthly fee.', translation:'Jika Anda dapat memperpanjang masa kontrak, kami dapat mengurangi biaya bulanan.' },
+      { label:'Clarify', text:'What flexibility do you have on the payment schedule?', translation:'Seberapa fleksibel jadwal pembayarannya?' },
+    ],
+  },
+  {
+    id:'pro-presentation', type:'professional', title:'Executive Presentations', icon:'📊', level:'Advanced', focus:'signposting and concise impact',
+    scenario:'Introduce three recommendations to senior leaders.',
+    model:'I will focus on three recommendations, their expected impact, and the decision required today.',
+    phrases:['The key takeaway is…','This matters because…','My recommendation is…'],
+    playbook:['Lead with the conclusion instead of the background.','Connect every number to a business implication.','Finish with one explicit decision or request.'],
+    examples:[
+      { label:'Opening', text:'The key takeaway is that retention improved while acquisition costs fell.', translation:'Inti utamanya adalah retensi meningkat sementara biaya akuisisi menurun.' },
+      { label:'Evidence', text:'Customer complaints fell by eighteen percent after the process change.', translation:'Keluhan pelanggan turun delapan belas persen setelah perubahan proses.' },
+      { label:'Implication', text:'This matters because it gives us capacity to serve two new markets.', translation:'Ini penting karena memberi kita kapasitas untuk melayani dua pasar baru.' },
+      { label:'Ask', text:'I am asking for approval to begin phase one next Monday.', translation:'Saya meminta persetujuan untuk memulai fase satu Senin depan.' },
+    ],
+  },
+  {
+    id:'pro-interview', type:'professional', title:'Professional Interviews', icon:'💼', level:'Advanced', focus:'evidence-based answers',
+    scenario:'Explain a project challenge using STAR.',
+    model:'The deadline moved forward by two weeks, so I reprioritized the scope and coordinated daily risk checks.',
+    phrases:['The situation was…','My responsibility was…','The measurable result was…'],
+    playbook:['Set the situation in one or two sentences.','Spend most of the answer on your own actions.','Close with a measurable result and what you learned.'],
+    examples:[
+      { label:'Situation', text:'Our largest client requested delivery two weeks earlier than planned.', translation:'Klien terbesar kami meminta pengiriman dua minggu lebih awal dari rencana.' },
+      { label:'Action', text:'I reprioritized the scope and introduced a daily risk review.', translation:'Saya memprioritaskan ulang cakupan dan memperkenalkan tinjauan risiko harian.' },
+      { label:'Result', text:'We delivered on time and reduced defects by twelve percent.', translation:'Kami mengirim tepat waktu dan mengurangi cacat sebesar dua belas persen.' },
+      { label:'Weakness', text:'I used to overcommit, so I now confirm priorities before accepting new work.', translation:'Dulu saya terlalu banyak berkomitmen, jadi sekarang saya memastikan prioritas sebelum menerima pekerjaan baru.' },
+    ],
+  },
+  {
+    id:'pro-networking', type:'professional', title:'Strategic Networking', icon:'🌐', level:'Advanced', focus:'introductions and follow-up',
+    scenario:'Introduce yourself at an industry event.',
+    model:'I lead product operations for an education platform, with a focus on sustainable growth and learner retention.',
+    phrases:['I specialize in…','What brings you to…','I would enjoy continuing this conversation.'],
+    playbook:['Introduce your role, field, and current focus in one breath.','Ask an open question connected to the event.','Follow up with a specific reason to continue talking.'],
+    examples:[
+      { label:'Introduction', text:'I work in product operations, focusing on learner retention.', translation:'Saya bekerja di operasional produk, dengan fokus pada retensi pelajar.' },
+      { label:'Question', text:'What challenge is your team most interested in solving this year?', translation:'Tantangan apa yang paling ingin diselesaikan tim Anda tahun ini?' },
+      { label:'Connection', text:'Your point about onboarding connects closely with a project I am leading.', translation:'Poin Anda tentang orientasi pengguna sangat berkaitan dengan proyek yang sedang saya pimpin.' },
+      { label:'Follow-up', text:'I enjoyed our conversation; may I send you the research I mentioned?', translation:'Saya menikmati percakapan kita; bolehkah saya mengirim riset yang tadi saya sebutkan?' },
+    ],
+  },
 ];
 
 const proQuestion = (id, moduleId, prompt, choices, answer) => ({ id:`pro-quiz-${id}`, type:'professionalQuiz', moduleId, prompt, choices, answer });

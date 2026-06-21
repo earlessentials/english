@@ -8,7 +8,7 @@
     <meta name="color-scheme" content="light dark" />
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=15" />
+    <link rel="stylesheet" href="styles.css?v=16" />
     <title>English Playground — Learn English Daily from Scratch</title>
   </head>
   <body>
@@ -103,8 +103,8 @@
             <button class="path-node first-node current" data-world="Basic Greetings"><span class="node-badge">1</span><span class="node-icon">👋</span><strong>Greetings</strong><small>0/12 lessons</small></button>
             <button class="path-node second-node" data-world="Family"><span class="node-badge">2</span><span class="node-icon">🏡</span><strong>Family</strong><small>0/12 lessons</small></button>
             <button class="path-node locked" data-world="Food"><span class="node-badge">🔒</span><span class="node-icon">🍜</span><strong>Food</strong><small>0/10 • terkunci</small></button>
-            <button class="path-node locked" data-world="Travel"><span class="node-badge">🔒</span><span class="node-icon">✈️</span><strong>Travel</strong><small>terkunci</small></button>
-            <button class="path-node locked" data-world="Work & Business"><span class="node-badge">🔒</span><span class="node-icon">💼</span><strong>Work</strong><small>terkunci</small></button>
+            <button class="path-node locked" data-world="Travel"><span class="node-badge">🔒</span><span class="node-icon">✈️</span><strong>Travel</strong><small>0/12 • terkunci</small></button>
+            <button class="path-node locked" data-world="Work & Business"><span class="node-badge">🔒</span><span class="node-icon">💼</span><strong>Work</strong><small>0/12 • terkunci</small></button>
           </div>
           <button class="text-button" id="fullPath">Lihat seluruh peta <span>→</span></button>
         </div>
@@ -144,7 +144,7 @@
 
       <section class="section challenge-section" id="progress">
         <div class="shell challenge-grid">
-          <div class="challenge-copy"><div class="eyebrow light"><span>✦</span> 5-MINUTE CHALLENGE</div><h2>Susun lima<br />kalimat.</h2><p>Setiap ronde makin panjang. Selesaikan sebelum lima menit habis.</p><div class="high-score"><span>⚡</span><div><small>SKOR SESI INI</small><strong id="currentScore">0 pts</strong></div></div></div>
+          <div class="challenge-copy"><div class="eyebrow light"><span>✦</span> 5-MINUTE CHALLENGE</div><h2>Susun lima<br />kalimat.</h2><p>Setiap ronde makin panjang. Selesaikan sebelum lima menit habis.</p><div class="daily-set-pill" id="dailyChallengeInfo">Memilih set hari ini…</div><div class="high-score"><span>⚡</span><div><small>SKOR SESI INI</small><strong id="currentScore">0 pts</strong></div></div></div>
           <div class="sentence-game" aria-live="polite">
             <div class="game-top"><span><i id="challengeStep">1</i> / 5</span><div class="timer"><i></i> <strong id="timer">05:00</strong></div><span class="combo" id="challengeLength">3 KATA</span></div>
             <p id="challengePrompt">Susun menjadi kalimat yang benar:</p>
@@ -182,6 +182,6 @@
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <div class="confetti" id="confetti" aria-hidden="true"></div>
-    <script src="app.js?v=16" type="module"></script>
+    <script src="app.js?v=17" type="module"></script>
   </body>
 </html>

@@ -1,5 +1,5 @@
-const CACHE = 'english-playground-v16';
-const ASSETS = ['./', './index.html', './styles.css?v=15', './app.js?v=16', './database.js?v=6', './path-data.js?v=1', './centers-data.js?v=2', './games.js?v=2', './manifest.webmanifest', './assets/pearl-cat-logo-512.png', './assets/hero-english-playground.webp'];
+const CACHE = 'english-playground-v17';
+const ASSETS = ['./', './index.html', './styles.css?v=16', './app.js?v=17', './database.js?v=7', './path-data.js?v=2', './centers-data.js?v=3', './games.js?v=2', './manifest.webmanifest', './assets/pearl-cat-logo-512.png', './assets/hero-english-playground.webp'];
 self.addEventListener('install', event => event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting())));
 self.addEventListener('activate', event => event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE).map(key => caches.delete(key)))).then(() => self.clients.claim())));
 self.addEventListener('fetch', event => {

@@ -9,7 +9,7 @@ import {
   saveGameResult,
   getDatabaseStats,
   dateKey,
-} from './database.js?v=6';
+} from './database.js?v=7';
 import { runGame, stopActiveGame, validateGameRecords } from './games.js?v=2';
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -23,6 +23,8 @@ const state = {
   database: null,
   searchIndex: [],
   challengeRounds: [],
+  challengeSet: 1,
+  challengeTotalSets: 1,
   challengeIndex: 0,
   challengeScore: 0,
   challengeSeconds: 300,
@@ -31,6 +33,14 @@ const state = {
   quiz: null,
   quizTimer: null,
 };
+
+const PATH_WORLDS = [
+  { name:'Basic Greetings', label:'Greetings', icon:'👋' },
+  { name:'Family', label:'Family', icon:'🏡' },
+  { name:'Food', label:'Food', icon:'🍜', prerequisite:'Family' },
+  { name:'Travel', label:'Travel', icon:'✈️', prerequisite:'Food' },
+  { name:'Work & Business', label:'Work', icon:'💼', prerequisite:'Travel' },
+];
 
 const modal = $('#modal');
 const modalContent = $('#modalContent');
@@ -284,25 +294,25 @@ async function moduleModal(name) {
 async function renderPathProgress() {
   const lessons = await getContent('pathLesson');
   const completed = new Set(state.learner.completedPathLessons || []);
-  const worlds = ['Basic Greetings', 'Family', 'Food'];
-  const greetingLessons = lessons.filter(item => item.world === 'Basic Greetings');
-  const familyLessons = lessons.filter(item => item.world === 'Family');
-  const greetingsComplete = greetingLessons.length > 0 && greetingLessons.every(item => completed.has(item.id));
-  const familyComplete = familyLessons.length > 0 && familyLessons.every(item => completed.has(item.id));
-  const currentWorld = !greetingsComplete ? 'Basic Greetings' : !familyComplete ? 'Family' : 'Food';
-
-  worlds.forEach((world, index) => {
-    const node = $(`.path-node[data-world="${world}"]`);
-    if (!node) return;
-    const worldLessons = lessons.filter(item => item.world === world);
+  const statuses = PATH_WORLDS.map(world => {
+    const worldLessons = lessons.filter(item => item.world === world.name);
     const done = worldLessons.filter(item => completed.has(item.id)).length;
-    const locked = world === 'Food' && !familyComplete;
+    const prerequisiteLessons = world.prerequisite ? lessons.filter(item => item.world === world.prerequisite) : [];
+    const unlocked = !world.prerequisite || (prerequisiteLessons.length > 0 && prerequisiteLessons.every(item => completed.has(item.id)));
+    return { ...world, worldLessons, done, unlocked };
+  });
+  const currentWorld = statuses.find(world => world.unlocked && world.done < world.worldLessons.length)?.name;
+
+  statuses.forEach((world, index) => {
+    const node = $(`.path-node[data-world="${world.name}"]`);
+    if (!node) return;
+    const locked = !world.unlocked;
     node.classList.toggle('locked', locked);
-    node.classList.toggle('complete', done === worldLessons.length && worldLessons.length > 0);
-    node.classList.toggle('current', !locked && done < worldLessons.length && world === currentWorld);
-    node.setAttribute('aria-label', `${world}: ${done} dari ${worldLessons.length} lesson${locked ? ', terkunci' : ''}`);
-    $('.node-badge', node).textContent = locked ? '🔒' : done === worldLessons.length && done > 0 ? '✓' : String(index + 1);
-    $('small', node).textContent = `${done}/${worldLessons.length} lessons${locked ? ' • terkunci' : ''}`;
+    node.classList.toggle('complete', world.done === world.worldLessons.length && world.worldLessons.length > 0);
+    node.classList.toggle('current', !locked && world.done < world.worldLessons.length && world.name === currentWorld);
+    node.setAttribute('aria-label', `${world.name}: ${world.done} dari ${world.worldLessons.length} lesson${locked ? ', terkunci' : ''}`);
+    $('.node-badge', node).textContent = locked ? '🔒' : world.done === world.worldLessons.length && world.done > 0 ? '✓' : String(index + 1);
+    $('small', node).textContent = `${world.done}/${world.worldLessons.length} lessons${locked ? ' • terkunci' : ''}`;
   });
 }
 
@@ -336,8 +346,9 @@ async function worldModal(world) {
   const lessons = (await getContent('pathLesson')).filter(item => item.world === world).sort((a, b) => a.order - b.order);
   const completed = new Set(state.learner.completedPathLessons || []);
   const done = lessons.filter(item => completed.has(item.id)).length;
+  const worldConfig = PATH_WORLDS.find(item => item.name === world);
   openModal(`
-    <div class="modal-hero"><span class="lesson-icon">${world === 'Basic Greetings' ? '👋' : world === 'Family' ? '🏡' : '🍜'}</span><div><span class="tag purple-bg">PILIH DUNIAMU</span><h2>${world}</h2><p>${done}/${lessons.length} lesson selesai. Semua lesson di bawah berasal dari database.</p></div></div>
+    <div class="modal-hero"><span class="lesson-icon">${worldConfig?.icon || '🗺️'}</span><div><span class="tag purple-bg">PILIH DUNIAMU</span><h2>${world}</h2><p>${done}/${lessons.length} lesson selesai. Semua lesson di bawah berasal dari database.</p></div></div>
     <div class="progress-track world-progress"><i style="width:${lessons.length ? done / lessons.length * 100 : 0}%"></i></div>
     <div class="path-lesson-list">${lessons.map(item => `<button class="path-lesson-card ${completed.has(item.id) ? 'done' : ''}" data-path-id="${item.id}"><span>${item.emoji}</span><i>${String(item.order).padStart(2, '0')}</i><strong>${item.word}</strong><small>${item.meaning}</small><b>${completed.has(item.id) ? '✓' : '→'}</b></button>`).join('')}</div>
   `);
@@ -347,20 +358,16 @@ async function worldModal(world) {
 async function fullPathModal() {
   const lessons = await getContent('pathLesson');
   const completed = new Set(state.learner.completedPathLessons || []);
-  const familyLessons = lessons.filter(item => item.world === 'Family');
-  const familyComplete = familyLessons.length > 0 && familyLessons.every(item => completed.has(item.id));
-  const worlds = [
-    { name:'Basic Greetings', icon:'👋', unlocked:true },
-    { name:'Family', icon:'🏡', unlocked:true },
-    { name:'Food', icon:'🍜', unlocked:familyComplete },
-    { name:'Travel', icon:'✈️', unlocked:false, comingSoon:true },
-    { name:'Work & Business', icon:'💼', unlocked:false, comingSoon:true },
-  ];
-  openModal(`<div class="modal-hero"><span class="lesson-icon">🗺️</span><div><span class="tag purple-bg">LEARNING PATH</span><h2>Pilih duniamu</h2><p>34 lesson aktif dengan progress yang benar-benar tersimpan.</p></div></div><div class="world-grid">${worlds.map(world => {
+  const worlds = PATH_WORLDS.map(world => {
     const worldLessons = lessons.filter(item => item.world === world.name);
     const done = worldLessons.filter(item => completed.has(item.id)).length;
-    const detail = world.comingSoon ? 'Segera hadir' : `${done}/${worldLessons.length} lessons`;
-    return `<button class="world-card ${world.unlocked ? '' : 'locked'}" data-world-name="${world.name}" ${world.unlocked ? '' : 'disabled'}><span>${world.icon}</span><strong>${world.name}</strong><small>${detail}</small><b>${world.unlocked ? 'Buka →' : '🔒'}</b></button>`;
+    const prerequisiteLessons = world.prerequisite ? lessons.filter(item => item.world === world.prerequisite) : [];
+    const unlocked = !world.prerequisite || (prerequisiteLessons.length > 0 && prerequisiteLessons.every(item => completed.has(item.id)));
+    return { ...world, worldLessons, done, unlocked };
+  });
+  openModal(`<div class="modal-hero"><span class="lesson-icon">🗺️</span><div><span class="tag purple-bg">LEARNING PATH</span><h2>Pilih duniamu</h2><p>${lessons.length} lesson aktif dengan progress yang benar-benar tersimpan.</p></div></div><div class="world-grid">${worlds.map(world => {
+    const detail = `${world.done}/${world.worldLessons.length} lessons`;
+    return `<button class="world-card ${world.unlocked ? '' : 'locked'}" data-world-name="${world.name}" ${world.unlocked ? '' : 'disabled'}><span>${world.icon}</span><strong>${world.name}</strong><small>${detail}${world.unlocked ? '' : ` • selesaikan ${world.prerequisite}`}</small><b>${world.unlocked ? 'Buka →' : '🔒'}</b></button>`;
   }).join('')}</div>`);
   $$('.world-card:not([disabled])').forEach(button => button.addEventListener('click', () => worldModal(button.dataset.worldName)));
 }
@@ -386,11 +393,14 @@ async function professionalLessonModal(id) {
     <div class="modal-hero"><span class="lesson-icon">${lesson.icon}</span><div><span class="tag coral-bg">${lesson.level.toUpperCase()}</span><h2>${lesson.title}</h2><p>Focus: ${lesson.focus}</p></div></div>
     <div class="pro-scenario"><small>WORKPLACE SCENARIO</small><strong>${lesson.scenario}</strong></div>
     <div class="model-answer"><small>MODEL LANGUAGE</small><p>${lesson.model}</p><button class="secondary-button pro-audio">🔊 Dengar model</button></div>
+    <div class="implementation-card"><small>3-STEP PLAYBOOK</small><ol>${lesson.playbook.map(step=>`<li>${step}</li>`).join('')}</ol></div>
     <div class="phrase-bank"><strong>Useful phrases</strong>${lesson.phrases.map(phrase=>`<button>${phrase}</button>`).join('')}</div>
+    <div class="pro-examples"><div class="pro-examples-head"><strong>Examples you can use</strong><small>Tap audio, then adapt the sentence.</small></div>${lesson.examples.map((example,index)=>`<article><div><small>EXAMPLE ${index+1} • ${example.label}</small><p>${example.text}</p><span>${example.translation}</span></div><button class="pro-example-audio" data-example-index="${index}" aria-label="Dengarkan example ${index+1}">🔊</button></article>`).join('')}</div>
     <div class="modal-actions"><button class="primary-button pro-done">Simpan lesson +20 XP</button></div>
   `);
   $('.pro-audio').addEventListener('click',()=>speak(lesson.model,.78));
   $$('.phrase-bank button').forEach(button=>button.addEventListener('click',()=>speak(button.textContent,.75)));
+  $$('.pro-example-audio').forEach(button=>button.addEventListener('click',()=>speak(lesson.examples[Number(button.dataset.exampleIndex)].text,.78)));
   $('.pro-done').addEventListener('click',async event=>{if(event.currentTarget.dataset.done)return;event.currentTarget.dataset.done='true';await addXP(20,`professional:${lesson.id}`,'Professional lesson: +20 XP');event.currentTarget.textContent='Tersimpan ✓';});
 }
 
@@ -528,7 +538,7 @@ async function handleChallengeCheck() {
   $('#challengePrompt').textContent='Lima kalimat selesai. Hasil tersimpan di database.';
   $('#checkSentence').dataset.action='restart';
   $('#checkSentence').textContent='Main lagi ↻';
-  await saveGameResult('five-minute-challenge', state.challengeScore, { rounds:5, secondsLeft:state.challengeSeconds });
+  await saveGameResult('five-minute-challenge', state.challengeScore, { rounds:5, set:state.challengeSet, date:dateKey(), secondsLeft:state.challengeSeconds });
   state.learner.challengeBest = Math.max(state.learner.challengeBest || 0, state.challengeScore);
   await saveLearner(state.learner);
   await addXP(100, 'challenge:five-sentences', 'Challenge selesai: +100 XP');
@@ -560,7 +570,10 @@ function attachEvents() {
   $('.all-games').addEventListener('click',()=>moduleModal('Games'));
   $$('.quest-item').forEach(item=>item.addEventListener('click',()=>{const index=Number(item.dataset.quest);if(index===0)lessonModal('vocab-travel',0);if(index===1)listeningModal('listening-cafe',1);if(index===2){$('#progress').scrollIntoView({behavior:'smooth'});startChallengeTimer();}}));
   $('#fullPath').addEventListener('click', fullPathModal);
-  $$('.path-node').forEach(node=>node.addEventListener('click',()=>node.classList.contains('locked')?showToast(node.dataset.world === 'Food' ? 'Selesaikan 12 lesson Family untuk membuka Food' : 'Area ini segera hadir'):worldModal(node.dataset.world)));
+  $$('.path-node').forEach(node=>node.addEventListener('click',()=>{
+    const world = PATH_WORLDS.find(item => item.name === node.dataset.world);
+    node.classList.contains('locked') ? showToast(`Selesaikan semua lesson ${world?.prerequisite} untuk membuka ${world?.label}`) : worldModal(node.dataset.world);
+  }));
   $$('.hero-visual .sound-button').forEach(button=>button.addEventListener('click',()=>speak('adventure',.7)));
   $$('.search-open').forEach(button=>button.addEventListener('click',()=>{$('#searchModal').showModal();setTimeout(()=>$('#globalSearch').focus(),50);}));
   $('#globalSearch').addEventListener('input',event=>renderSearchResults(event.target.value.trim()));
@@ -593,7 +606,14 @@ async function bootstrap() {
     state.database = await getDatabaseStats();
     const invalidGames = validateGameRecords(await getContent('game'));
     if (invalidGames.length) throw new Error(`Game engine missing: ${invalidGames.map(game => game.id).join(', ')}`);
-    state.challengeRounds = (await getContent('challenge')).sort((a,b)=>a.order-b.order);
+    const challengePool = await getContent('challenge');
+    const availableSets = [...new Set(challengePool.map(round => round.set))].sort((a,b)=>a-b);
+    const now = new Date();
+    const localDayNumber = Math.floor(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) / 86400000);
+    state.challengeSet = availableSets[localDayNumber % availableSets.length];
+    state.challengeTotalSets = availableSets.length;
+    state.challengeRounds = challengePool.filter(round => round.set === state.challengeSet).sort((a,b)=>a.order-b.order);
+    $('#dailyChallengeInfo').textContent = `Set ${state.challengeSet} dari ${state.challengeTotalSets} • berganti setiap hari`;
     $('#dbStatus').textContent = `${state.database.counts.game} game engines ✓`;
     renderProgress(); renderStreak(); renderQuests(); loadChallengeRound(); updateChallengeTimer();
     await renderPathProgress();

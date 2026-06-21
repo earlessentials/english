@@ -22,11 +22,11 @@ Then open `http://localhost:43128`.
 - Spaced-repetition vocabulary review scheduling
 - Six database-backed grammar lessons and six speaking scenarios
 - Sixteen playable game records with validated algorithm engines
-- Five-round sentence challenge increasing from 3 to 9 words
-- Thirty-four database-backed learning-path lessons across Greetings, Family, and Food
+- Eleven rotating daily sentence-challenge sets with five increasingly longer rounds each
+- Fifty-eight database-backed learning-path lessons across Greetings, Family, Food, Travel, and Work
 - Seventeen-form tense learning center with positive, negative, and question examples
 - Timed 50-question tense capability test scored out of 100
-- Advanced Professional English center with a timed 20-scenario assessment and embedded video lesson
+- Advanced Professional English center with practical playbooks, example banks, a timed 20-scenario assessment, and an embedded video lesson
 - Custom black-cat-and-pearls mascot identity
 - Searchable module/lesson/game launcher
 - Theme and interface-language controls
